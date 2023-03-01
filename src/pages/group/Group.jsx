@@ -192,8 +192,12 @@ const AddToGroup = (groupId) => {
       axios.put(`http://localhost:80/frontend/back_end/getPendingMember.php/edit`,inputs)
       .then((respone)=>{
           console.log(respone.data);
+          getUsersGroup();
+          getPendingRequest();
+          getMyAcceptrdGroups();
           getGroups();
           getPendingMempers();
+          getAcceptedMempers();
       })
 
     }
@@ -248,7 +252,7 @@ let flag = false;
                                 if(pendingMembers.includes(groups.group_id)){
                                   return ( 
                                     <Link>
-                                        <Button variant="primary" className="groupInfoDesc" onClick={()=>removeRequest(groups.group_id)} style={{width:"125px",marginLeft:"0"}}>remove request</Button>
+                                        <Button variant="primary" className="groupInfoDesc" onClick={()=>removeRequest(groups.group_id)} style={{width:"150px",marginLeft:"0"}}>remove request</Button>
                                     </Link>
                               )
 
@@ -257,7 +261,7 @@ let flag = false;
                                     return (
 
                                         <Link to={`/groups/${groups.group_id}/show`}>
-                                            <Button variant="danger" className="groupInfoDesc" onClick={()=>removeRequest(groups.group_id)} style={{width:"125px",marginLeft:"0"}}>delete group</Button>
+                                            <Button variant="danger" className="groupInfoDesc" onClick={()=>removeRequest(groups.group_id)} style={{width:"150px",marginLeft:"0"}}>delete group</Button>
                                         </Link>
 
 
@@ -362,9 +366,9 @@ let flag = false;
 
 
                   </ul>
+                  <hr className="sidebarHr" />
               </div>
                : "" }
-               <hr className="sidebarHr" />
                 <div className="rightbarWrapper">
                 <img className="rightbarAd" src="assets/ad.png" alt="" />
                   <h4 className="rightbarTitle">Members ({usersGroups.length})</h4>

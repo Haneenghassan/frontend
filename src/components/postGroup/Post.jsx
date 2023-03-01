@@ -130,8 +130,12 @@ try {
   const response = await axios.post(
     "http://localhost:80/frontend/back_end/postEditGroup.php", formEditData
   );
+  props.handleSubmit(Math.random());
+
   console.log(response.data);
   getPosts();
+  getComments();
+
   // window.location.assign('/');
 } catch (error) {
   console.error(error);
@@ -150,6 +154,8 @@ const deletePost = (id) => {
 axios.delete(`http://localhost:80/frontend/back_end/postsGroup.php/${id}`).then(function(response){
   getPosts();
   props.handleSubmit(Math.random());
+  getComments();
+
 
   // window.location.assign('/');
 })
@@ -180,6 +186,8 @@ const canclePostEdit = (id) => {
       e.preventDefault();
       axios.post('http://localhost:80/frontend/back_end/commentsGroup.php/' , inputs).then((res)=> {
         console.log(res);
+        getPosts();
+
         getComments();
 
       }
@@ -209,7 +217,7 @@ const canclePostEdit = (id) => {
   const handleEditCommentSubmit = (e) => {
     e.preventDefault();
     axios.put('http://localhost:80/frontend/back_end/commentsGroup.php/' , inputs).then(()=>{
-
+      getPosts();
       getComments();
     }
 

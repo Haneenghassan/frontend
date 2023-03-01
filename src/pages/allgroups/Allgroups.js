@@ -163,7 +163,7 @@ const ShowUpdateForm = () => {
                       return (
               <div className="blogBox" key={index} >
                 <div className="blogImg">
-                  <img src={require(`../../components/image/${ele.group_image}`)} alt="Group1" />
+                  <img src={require(`../../components/image/${ele.group_image}`)} alt="Group1" id="img"/>
                 </div>
 
                 <div className="blogText">

@@ -88,7 +88,7 @@ if(name==="email"){
           <img style={{ width:"100%"}} src={require(`../../components/image/weshare green.png`)}/>
           </h3>
           <span className="loginDesc">
-          Connect with friends and the world around you on 405 FOUND.
+          Choose your social space , discover new worlds and stay connected on WE SHARE!
           </span>
         </div>
         <div className="loginRight" >  

@@ -20,9 +20,10 @@ switch ($method) {
         // $sql = "SELECT * FROM `users`
         //         INNER JOIN `posts` ON posts.user_id = users.id
         //         ORDER BY posts.created_at DESC" ;
-        $sql = "SELECT p.*, u.*
-        FROM posts p
+        $sql = "SELECT p.* , u.* , g.group_name
+        FROM posts p 
         LEFT JOIN users u ON p.user_id = u.id
+        LEFT JOIN groups g ON p.group_id = g.group_id
         WHERE p.user_id = $user_id OR p.group_id IN (
             SELECT group_id
             FROM groups
@@ -37,6 +38,23 @@ switch ($method) {
             WHERE user_id = $user_id
         )
         ORDER BY p.created_at DESC";
+        // $sql = "SELECT p.*, u.*
+        // FROM posts p
+        // LEFT JOIN users u ON p.user_id = u.id
+        // WHERE p.user_id = $user_id OR p.group_id IN (
+        //     SELECT group_id
+        //     FROM groups
+        //     WHERE user_id = $user_id
+        // ) OR p.user_id IN (
+        //     SELECT friend_id
+        //     FROM friends
+        //     WHERE user_id = $user_id AND status = 'accepted'
+        // ) OR p.group_id IN (
+        //     SELECT group_id
+        //     FROM members
+        //     WHERE user_id = $user_id
+        // )
+        // ORDER BY p.created_at DESC";
         $query = $conn->prepare($sql);
         // $stmt->bindParam(':id', $path[3]);
         

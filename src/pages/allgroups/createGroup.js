@@ -60,40 +60,7 @@ export default function CreateGroup(props) {
        </form>
      </section>
     </div>
-{/*  */}
-    {/* <h1>createGroup</h1>
-    <div className='form-wrapper mb-5' >
-    <form onSubmit={props.handleSubmit}>
-      <div>
-        <label htmlFor="text">Text</label>
-        <input
-          type="text"
-          id="text"
-          value={props.text}
-          onChange={(e) => props.setText(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="text">group description</label>
-        <input
-          type="text"
-          id="text"
-          value={props.group_description}
-          onChange={(e) => props.setGroupDescription(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="file">File</label>
-        <input
-          type="file"
-          id="file"
-          onChange={(e) => props.setFile(e.target.files[0])}
-        />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
 
-    </div> */}
     
     </>
   )

@@ -16,6 +16,7 @@ import { async } from "q";
 import {AiOutlineLike} from "react-icons/ai";
 import {AiFillLike} from "react-icons/ai";
 import { CgSoftwareUpload } from "react-icons/cg";
+import { IoMdPhotos } from "react-icons/io";
 
 
 
@@ -153,11 +154,9 @@ const updateState = () =>{
 
   const deletePost = async (id) => {
     await axios.delete(`http://localhost:80/frontend/back_end/posts.php/${id}`).then(function (response) {
-      // window.location.assign('/');
       getPosts();
       props.handleSubmit(Math.random());
 
-      setCheck(true);
       getComments();
     })
   }
@@ -165,10 +164,25 @@ const updateState = () =>{
 
   const canclePostEdit = (id) => {
     console.log(id);
-    document.getElementById(`post${id}`).style.display = 'block';
-    document.getElementById(`editPostForm${id}`).style.display = 'none';
-    document.getElementById(`editPostBTN${id}`).style.display = 'inline-block';
-    document.getElementById(`imgPost${id}`).style.display = 'block';
+    setCheck(Math.random());
+    props.handleSubmit(Math.random());
+    getComments();
+
+
+    if (
+      document.getElementById(`post${id}`) &&
+      document.getElementById(`editPostForm${id}`) &&
+      document.getElementById(`editPostBTN${id}`) &&
+      document.getElementById(`imgPost${id}`)
+
+    ) {
+      document.getElementById(`post${id}`).style.display = 'block';
+      document.getElementById(`editPostForm${id}`).style.display = 'none';
+      document.getElementById(`editPostBTN${id}`).style.display = 'inline-block';
+      document.getElementById(`imgPost${id}`).style.display = 'block';
+    }
+
+
     props.handleSubmit(Math.random());
 
   }
@@ -192,10 +206,10 @@ const updateState = () =>{
     await axios.post('http://localhost:80/frontend/back_end/comments.php/', inputs).then((res) => {
       console.log(res);
       getPosts();
+      getComments();
       // window.location.assign('/')
     }
     )
-    getComments();
   }
 
   const deleteComment = (id) => {
@@ -221,11 +235,13 @@ const updateState = () =>{
   const handleEditCommentSubmit =  (e) => {
     e.preventDefault();
      axios.put('http://localhost:80/frontend/back_end/comments.php/', inputs).then(()=>{
-      cancleCommentEdit(e.target.id)
-      getComments();
+      // props.handleSubmit(Math.random());
+      // setCheck(Math.random())
       getPosts();
+      getComments();
+
     }
-      )
+    )
   }
 
   const foucsOnComment = (id) => {
@@ -309,28 +325,41 @@ console.log(props);
                   <div className="postTopLeft" style={{display:"flex"}}>
 
 
-<div>
-                    <img
-                      className="postProfileImg"
-                      src={require(`../image/${props.post.image}`)}
-                      alt=""
-                    />
+                    <div>
+                        <img
+                          className="postProfileImg"
+                          src={require(`../image/${props.post.image}`)}
+                          alt=""
+                        />
+                    </div>
+                      {props.post.group_id > 0 
+                            ?
+                    <div style={{display:"flex",flexDirection:"column"}}>
+                      <div>
+                        <span className="postUsername">
+                          {props.post.name}
+                        </span>
+    
+                        <span className="postDate">{props.post.created_at}</span>
 
-</div>
-                 <div style={{display:"flex",flexDirection:"column"}}>
-                  <div>
-                    <span className="postUsername">
-                      {props.post.name}
-                    </span>
- 
-                    <span className="postDate">{props.post.created_at}</span>
-
-                  </div>
-                  <div style={{marginLeft:"4%"}}>
-                    
-<span style={{color:"gray",fontSize:"14px"}}>hikljhgfdgk;lkjfdkllkhjghfgdghkljkhgjhfgdfgklkljkhgjhf</span>
-                  </div>
-                  </div> 
+                      </div>
+                      <div style={{marginLeft:"4%",width:"350px"}}>
+                            <span style={{color:"gray",fontSize:"14px"}}>shared this post in <a href={`/groups/${props.post.group_id}/show`}>{props.post.group_name}</a> group</span>
+                        
+                            {/* <p style={{marginTop : '-2px' , marginLeft : '5px'}}> shared this post in <a href={/groups/${post.group_id}/show}>{post.group_name}</a> group</p> */}
+                      </div>
+                    </div> 
+                          :  <div style={{display:"flex",flexDirection:"column"}}>
+                          <div>
+                            <span className="postUsername">
+                              {props.post.name}
+                            </span>
+        
+                            <span className="postDate">{props.post.created_at}</span>
+    
+                          </div>
+                       
+                        </div> }
 
                     
                   </div>
@@ -370,12 +399,16 @@ console.log(props);
                         id={`editPostInput${props.post.post_id}`} onChange={() => handleEditPost(props.post.post_id)} />
 
                       <br/>
-                       
-                      <input
+                       {/*  */}
+                       <input type="file" className="shareInput" id="file"
+                     onChange={(e) => setFile(e.target.files[0])} />
+            {/* <label className="label" for="file"><IoMdPhotos size={20}/></label> */}
+                       {/*  */}
+                      {/* <input
                         type="file"
                         id="file"
                         onChange={(e) => setFile(e.target.files[0])} hidden />
-                         <label className="label" for="file"><CgSoftwareUpload size={20}/>Choose file</label> 
+                         <label className="label" for="file"><CgSoftwareUpload size={20}/>Choose file</label>  */}
 
                       <Button  variant="success" type='submit' size="sm" style={{marginLeft:"25%"}}>Update</Button>
                       <Button style={{ background: 'red', color: 'white',marginLeft:'1%' }} size="sm" onClick={() => { canclePostEdit(props.post.post_id) }} type='button'>Cancle</Button>
@@ -398,8 +431,8 @@ console.log(props);
                       <input
                         type="file"
                         id="file"
-                        onChange={(e) => setFile(e.target.files[0])} hidden />
-                          <label className="label" for="file"><CgSoftwareUpload size={20}/>Choose file</label> 
+                        onChange={(e) => setFile(e.target.files[0])}  />
+                          {/* <label className="label" for="file"><CgSoftwareUpload size={20}/>Choose file</label>  */}
 
 
                       <Button variant="success" type='submit' size="sm" style={{marginLeft:"25%"}}>Update</Button>

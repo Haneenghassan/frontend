@@ -17,14 +17,28 @@ export default function Topbar() {
   const ImageUser = localStorage.getItem('image');
   const NameUser = localStorage.getItem('name');
 
+  const [dataUsers,setDataUsers] = useState([]);
+
   const [requestFriends,setRequestFriends] = useState([]);  
   const [requestFriend,setrequestFriend] = useState([]);
 
   useEffect(()=>{
+    getDataUsers();
     getFriendsRequest();
 
 },[]);
 
+
+
+      // لعرض  بيانات المستخدم في الموقع
+      const getDataUsers = () => {
+
+        axios.get(`http://localhost:80/frontend/back_end/user.php/users/${id}`)
+        .then((respone)=>{
+          setDataUsers(respone.data)
+            console.log(respone.data);
+        })
+    }
   const getFriendsRequest = () => {
 
     axios.get(`http://localhost:80/frontend/back_end/friendRequests.php/${id}`)

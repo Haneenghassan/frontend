@@ -177,7 +177,7 @@ const checkPass=RegExp(/^^[A-Za-z]\w{8,31}$/);
 
           </h3>
           <span className="loginDesc">
-            Connect with friends and the world around you on Lamasocial.
+          Think openly , explore new worlds and meet and reach out to friends on WE SHARE .
           </span>
         </div>
          

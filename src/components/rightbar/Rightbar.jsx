@@ -87,8 +87,9 @@ function getUsers(){
             <b>Pola Foster</b> and <b>3 other friends</b> have a birhday today.
           </span> */}
         </div>
-        <img className="rightbarAd" src="assets/ad.png" alt="" />
+        <img className="rightbarAd" src={require("../../components/image/Connected world-bro.png")} alt="" style={{margin:"0"}} />
         <h4 className="rightbarTitle">Friends</h4>
+          <hr className="sidebarHr" />
         <ul className="rightbarFriendList">
         {acceptrdFriends.map((ele,index)=>{
             return(
@@ -104,6 +105,7 @@ function getUsers(){
               </a>
             )})}
         </ul>
+
       </>
     );
   };
