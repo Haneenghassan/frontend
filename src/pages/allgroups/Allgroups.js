@@ -168,7 +168,7 @@ const ShowUpdateForm = () => {
 
                 <div className="blogText">
                   {/* <span> 20 OCT 2023 / Created At </span> */}
-                  <h4 className="blogTitle">{ele.name} </h4>
+                  <h4 className="blogTitle">{ele.group_name} </h4>
                   <p className="blogDesc">
                   {ele.group_description}  
                   </p>

@@ -75,6 +75,11 @@ export default function Topbar() {
           
       }
   return (
+
+    <>
+    {dataUsers.map((users,index)=>{
+
+      return <div key={index}>
     <div className="topbarContainer">
       <div className="topbarLeft" style={{marginLeft:"30px"}}>
       <Link to={`/home`}>
@@ -145,12 +150,15 @@ export default function Topbar() {
         </div>
 
         <div style={{display:"flex",alignItems:"center",gap: "10px"}}>
-        <p style={{marginBottom:"0"}}>Hello,{NameUser}</p>
+        <p style={{marginBottom:"0"}}>Hello,{users.name}</p>
         <Link to={`/profile/${id}`}>
-        <img style={{marginLeft:"10%"}} src={require(`../image/${ImageUser}`)} alt="" className="topbarImg"/>
+        <img style={{marginLeft:"10%"}} src={require(`../image/${users.image}`)} alt="" className="topbarImg"/>
         </Link>
          </div>
       </div>
     </div>
+    </div>
+  })}
+  </>
   );
 }

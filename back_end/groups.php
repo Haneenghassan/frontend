@@ -33,13 +33,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
   
   } elseif ($_SERVER["REQUEST_METHOD"] === "GET") {
-
     $sql = "SELECT * 
             FROM groups
             INNER JOIN users WHERE groups.user_id = users.id" ;
     $query = $conn->prepare($sql);
     $query->execute();
     $users = $query->fetchAll(PDO::FETCH_ASSOC);
+    // print_r($users);
         echo json_encode($users);
   } elseif ($_SERVER["REQUEST_METHOD"] === "DELETE") {
     $sql = "DELETE FROM groups WHERE group_id = ?" ;
