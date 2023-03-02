@@ -387,6 +387,9 @@ try {
                         return ( flagLike = true )
                       }})}
 
+
+                      
+
                       {( flagLike == true ) ?
                               <form action="" onSubmit={removeLikePost}>
                                 <button type='submit' style={{background : 'none' , border : 'none', color : 'rgb(35, 196, 131)'  }} onClick={()=>handleLikePost(props.post.post_id)}  href="#!" className="d-flex align-items-center me-3">
