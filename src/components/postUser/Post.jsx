@@ -42,7 +42,7 @@ const user_id = props.user_id;
 
 
   useEffect(() => {
-    getPosts();
+    // getPosts();
     getComments();
     getLikes();
 
@@ -52,39 +52,38 @@ const user_id = props.user_id;
 
 
 
-  function getPosts() {
-    axios.get(`http://localhost:80/frontend/back_end/getPostForUser.php/${user_id}`)
-      .then(response => {
-        console.log(response.data);
-        setPosts(response.data);
-      })
-  }
+//   function getPosts() {
+//     axios.get(`http://localhost:80/frontend/back_end/getPostForUser.php/${user_id}`)
+//       .then(response => {
+//         console.log(response.data);
+//         setPosts(response.data);
+//       })
+//   }
 
-  const handleImagePost = async (e) => {
-    e.preventDefault();
+//   const handleImagePost = async (e) => {
+//     e.preventDefault();
 
-    const formData = new FormData();
+//     const formData = new FormData();
 
-    formData.append("post", inputs);
-    formData.append("user_id", current_ID);
-    formData.append("file", file);
+//     formData.append("post", inputs);
+//     formData.append("user_id", current_ID);
+//     formData.append("file", file);
 
-try {
-  const response = await axios.post(
-    "http://localhost:80/frontend/back_end/posts.php", formData
-  );
-  console.log(response.data);
-  getPosts();
-  // window.location.assign('/');
-} catch (error) {
-  console.error(error);
-}
-};
+// try {
+//   const response = await axios.post(
+//     "http://localhost:80/frontend/back_end/posts.php", formData
+//   );
+//   console.log(response.data);
 
-  const handlePost = (e) => {
-    const value = e.target.value;
-    setInputs(value)
-  }
+// } catch (error) {
+//   console.error(error);
+// }
+// };
+
+  // const handlePost = (e) => {
+  //   const value = e.target.value;
+  //   setInputs(value)
+  // }
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -130,8 +129,7 @@ try {
       props.handleSubmit(Math.random());
 
       console.log(response.data);
-      // window.location.assign('/');
-      getPosts();
+  
       getComments();
     } catch (error) {
       console.error(error);
@@ -151,7 +149,6 @@ try {
       // window.location.assign('/');
       props.handleSubmit(Math.random());
 
-      getPosts();
       getComments();
     })
   }
@@ -181,9 +178,8 @@ try {
     e.preventDefault();
     axios.post('http://localhost:80/frontend/back_end/comments.php/', inputs).then((res) => {
       console.log(res);
-      getPosts();
+      // getPosts();
       getComments();
-      // window.location.assign('/')
 
     }
     )
@@ -212,8 +208,9 @@ try {
   const handleEditCommentSubmit = (e) => {
     e.preventDefault();
     axios.put('http://localhost:80/frontend/back_end/comments.php/', inputs).then(()=>{
-      getPosts();
+      // getPosts();
       getComments();
+      // cancleCommentEdit();
     }
       // window.location.assign('/')
     )
@@ -231,6 +228,20 @@ try {
 
   }
 
+  const updateCommentEdit = (id) => {
+    document.getElementById(`comment${id}`).style.display = "block";
+    document.getElementById(`editCommentForm${id}`).style.display = "none";
+    document.getElementById(`drpDwnCom${id}`).style.display = "block";
+    document.getElementById(`editCommentBTN${id}`).style.display =
+      "inline-block";
+      getComments();
+  };
+  const updatePostEdit = (id) => {
+    document.getElementById(`post${id}`).style.display = 'block';
+    document.getElementById(`editPostForm${id}`).style.display = 'none';
+    document.getElementById(`editPostBTN${id}`).style.display = 'inline-block';
+    document.getElementById(`imgPost${id}`).style.display = 'block';
+  };
      // like
 
 
@@ -254,7 +265,7 @@ try {
         await axios.post('http://localhost:80/frontend/back_end/likes.php/' , inputs).then(
           // window.location.assign('/')
           )
-          getPosts();
+          // getPosts();
           getComments();
           getLikes();
     }
@@ -264,7 +275,7 @@ try {
         await axios.post('http://localhost:80/frontend/back_end/likeDelete.php/' , inputs).then(
           // window.location.assign('/')
           )
-          getPosts();
+          // getPosts();
           getComments();
           getLikes();
     }
@@ -343,7 +354,7 @@ try {
 
                        
                     
-                        <Button  variant="success" type='submit' size="sm" style={{marginLeft:"25%"}}>Update</Button>
+                        <Button  variant="success" type='submit' size="sm" style={{marginLeft:"25%"}} onClick={() => {updatePostEdit(props.post.post_id);}} >Update</Button>
                       <Button variant="danger" size="sm" style={{ background: 'red', color: 'white',marginLeft:'1%' }} onClick={() => { canclePostEdit(props.post.post_id) }} type='button'>Cancle</Button>
                       
            
@@ -372,7 +383,7 @@ try {
 
                       <br />
 
-                      <Button type='submit' >Confirm</Button>
+                      <Button type='submit' onClick={() => {updatePostEdit(props.post.post_id);}}>Confirm</Button>
                       <Button style={{ background: 'red', color: 'white' }} onClick={() => { canclePostEdit(props.post.post_id) }} type='button'>Cancle</Button>
 
                     </form>
@@ -455,7 +466,7 @@ try {
                             <textarea style={{width:'90%'}} className="form-control" type="text" defaultValue={comment.comment_content} id={`editCommentInput${comment.comment_id}`} onChange={() => handleEditComment(comment.comment_id)} />
                             <div style={{marginLeft:"2%",marginTop:"2%",display:"flex"}}>
                           <div>
-                            <Button variant="success" type='submit'>Confirm</Button>
+                            <Button variant="success" type='submit' onClick={() => {updateCommentEdit(comment.comment_id);}}>Confirm</Button>
                             </div>
                           <div style={{marginLeft:"1%"}}>
                             <Button variant="danger" style={{ color: 'white' }} onClick={() => { cancleCommentEdit(comment.comment_id) }} type='button'>Cancle</Button>

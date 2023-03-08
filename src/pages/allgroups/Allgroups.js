@@ -13,6 +13,7 @@ import CreateGroup from "./createGroup";
 export default function Allgroups() {
 
   const current_ID = JSON.parse(localStorage.getItem('id'));
+  const [checkCreateGrouo, setCheckCreateGrouo] = useState(false);
 
     const[data,setData]=useState([]);
     const[showUpdateForm,setShowUpdateForm]=useState(false);
@@ -114,7 +115,8 @@ const handleSubmit = async (e) => {
       );
       console.log(response.data);
       setShowUpdateForm(false);
-      window.location.assign('/Allgroups');
+      setCheckCreateGrouo(Math.random());
+      // window.location.assign('/Allgroups');
 
 
     } catch (error) {
@@ -130,7 +132,7 @@ const ShowUpdateForm = () => {
       <>
         <Topbar />
         <div className="groupContainer">
-          <Sidebar />
+          <Sidebar check={checkCreateGrouo}/>
 
           <div className="Allgroups">.
           <div className="btn">

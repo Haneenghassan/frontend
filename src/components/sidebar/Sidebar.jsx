@@ -20,7 +20,7 @@ import { HiOutlineHome} from 'react-icons/hi';
 
 
 
-export default function Sidebar() {
+export default function Sidebar(props) {
 
   const current_ID = JSON.parse(localStorage.getItem('id'));
   const [groups , setGroups] = useState([]);
@@ -31,7 +31,8 @@ export default function Sidebar() {
   useEffect(()=>{
     getGroups();
     getMyAcceptrdGroups();
-} , [])
+    console.log(props.check);
+} , [props.check])
 
 function getGroups(){
   axios.get(`http://localhost:80/frontend/back_end/groups.php/`)

@@ -41,48 +41,47 @@ export default function Post(props) {
     // getPosts();
     getComments();
     getLikes();
+    console.log(props);
 
-  }, [check])
+  }, [])
   // Posts
 
 
 
-  function getPosts() {
-    axios.get(`http://localhost:80/frontend/back_end/posts.php/`)
-      .then(response => {
-        // console.log(response.data);
-        setPosts(response.data);
-        getComments();
-        getLikes();
-      })
-  }
+  // function getPosts() {
+  //   axios.get(`http://localhost:80/frontend/back_end/posts.php/`)
+  //     .then(response => {
+  //       // console.log(response.data);
+  //       setPosts(response.data);
+   
+  //     })
+  // }
 
-  const handleImagePost = async (e) => {
-    e.preventDefault();
+  // const handleImagePost = async (e) => {
+  //   e.preventDefault();
 
-    const formData = new FormData();
+  //   const formData = new FormData();
 
-    formData.append("post", inputs);
-    formData.append("user_id", current_ID);
-    formData.append("file", file);
+  //   formData.append("post", inputs);
+  //   formData.append("user_id", current_ID);
+  //   formData.append("file", file);
 
-    try {
-      const response = await axios.post(
-        "http://localhost:80/frontend/back_end/posts.php", formData
-      );
-      console.log(response.data);
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:80/frontend/back_end/posts.php", formData
+  //     );
+  //     console.log(response.data);
     
-      // getPosts();
-      // window.location.assign('/');
-    } catch (error) {
-      console.error(error);
-    }
-  };
+   
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  const handlePost = (e) => {
-    const value = e.target.value;
-    setInputs(value)
-  }
+  // const handlePost = (e) => {
+  //   const value = e.target.value;
+  //   setInputs(value)
+  // }
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -126,9 +125,7 @@ export default function Post(props) {
         "http://localhost:80/frontend/back_end/postEdit.php", formEditData
       );
       props.handleSubmit(Math.random());
-      updateState();
-      HiddenFormPostUpdate(e.target.id);
-      console.log(response.data);
+      getComments();
     } catch (error) {
       console.error(error);
     }
@@ -150,16 +147,16 @@ const updateState = () =>{
 
 
 
+const deletePost = (id) => {
+  axios.delete(`http://localhost:80/frontend/back_end/posts.php/${id}`).then(function (response) {
+    // window.location.assign('/');
+    props.handleSubmit(Math.random());
+
+    getComments();
+  })
+}
 
 
-  const deletePost = async (id) => {
-    await axios.delete(`http://localhost:80/frontend/back_end/posts.php/${id}`).then(function (response) {
-      getPosts();
-      props.handleSubmit(Math.random());
-
-      getComments();
-    })
-  }
 
 
   const canclePostEdit = (id) => {
@@ -205,7 +202,6 @@ const updateState = () =>{
     
     await axios.post('http://localhost:80/frontend/back_end/comments.php/', inputs).then((res) => {
       console.log(res);
-      getPosts();
       getComments();
       // window.location.assign('/')
     }
@@ -234,11 +230,13 @@ const updateState = () =>{
 
   const handleEditCommentSubmit =  (e) => {
     e.preventDefault();
+
      axios.put('http://localhost:80/frontend/back_end/comments.php/', inputs).then(()=>{
       // props.handleSubmit(Math.random());
       // setCheck(Math.random())
-      getPosts();
       getComments();
+      // cancleCommentEdit(e.target.id);
+    
 
     }
     )
@@ -264,7 +262,20 @@ const updateState = () =>{
 
 
   }
-
+  const updateCommentEdit = (id) => {
+    document.getElementById(`comment${id}`).style.display = "block";
+    document.getElementById(`editCommentForm${id}`).style.display = "none";
+    document.getElementById(`drpDwnCom${id}`).style.display = "block";
+    document.getElementById(`editCommentBTN${id}`).style.display =
+      "inline-block";
+      getComments();
+  };
+  const updatePostEdit = (id) => {
+    document.getElementById(`post${id}`).style.display = 'block';
+    document.getElementById(`editPostForm${id}`).style.display = 'none';
+    document.getElementById(`editPostBTN${id}`).style.display = 'inline-block';
+    document.getElementById(`imgPost${id}`).style.display = 'block';
+  };
 
   // like
 
@@ -288,7 +299,6 @@ const updateState = () =>{
     console.log(inputs)
       await axios.post('http://localhost:80/frontend/back_end/likes.php/' , inputs).then(()=>{
 
-        getPosts();
         getComments();
         getLikes();
       }
@@ -300,18 +310,15 @@ const updateState = () =>{
     console.log(inputs)
       await axios.post('http://localhost:80/frontend/back_end/likeDelete.php/' , inputs).then(()=>{
 
-        getPosts();
         getComments();
         getLikes();
       }
         // window.location.assign('/')
         )
   }
-console.log(props);
   var flagLike = false;
   var like_count = 0;
   var comment_count = 0 ;
-  var comment_count_show = 0 ;
   // 
   return (
 
@@ -410,7 +417,7 @@ console.log(props);
                         onChange={(e) => setFile(e.target.files[0])} hidden />
                          <label className="label" for="file"><CgSoftwareUpload size={20}/>Choose file</label>  */}
 
-                      <Button  variant="success" type='submit' size="sm" style={{marginLeft:"25%"}}>Update</Button>
+                      <Button  variant="success" type='submit' size="sm" style={{marginLeft:"25%"}} onClick={() => {updatePostEdit(props.post.post_id);}}>Update</Button>
                       <Button style={{ background: 'red', color: 'white',marginLeft:'1%' }} size="sm" onClick={() => { canclePostEdit(props.post.post_id) }} type='button'>Cancle</Button>
                     </form>
                     <img className="postImg" src={require(`../image/${props.post.post_image}`)} alt="" id={`imgPost${props.post.post_id}`} />
@@ -435,7 +442,7 @@ console.log(props);
                           {/* <label className="label" for="file"><CgSoftwareUpload size={20}/>Choose file</label>  */}
 
 
-                      <Button variant="success" type='submit' size="sm" style={{marginLeft:"25%"}}>Update</Button>
+                      <Button variant="success" type='submit' size="sm" style={{marginLeft:"25%"}} onClick={() => {updatePostEdit(props.post.post_id);}}>Update</Button>
                       <Button style={{ background: 'red', color: 'white',marginLeft:'1%' }} size="sm" onClick={() => { canclePostEdit(props.post.post_id) }} type='button'>Cancle</Button>
 
                     </form>
@@ -545,7 +552,7 @@ console.log(props);
                               <textarea style={{ width: '90%' }} className="form-control" type="text" defaultValue={comment.comment_content} id={`editCommentInput${comment.comment_id}`} onChange={() => handleEditComment(comment.comment_id)} />
                               <div style={{ marginLeft: "2%", marginTop: "2%", display: "flex" }}>
                                 <div>
-                                  <Button variant="success" type='submit'>Confirm</Button>
+                                  <Button variant="success" type='submit' onClick={() => {updateCommentEdit(comment.comment_id);}}>Confirm</Button>
                                 </div>
                                 <div style={{ marginLeft: "1%" }}>
                                   <Button variant="danger" style={{ color: 'white' }} onClick={() => { cancleCommentEdit(comment.comment_id) }} type='button'>Cancle</Button>

@@ -244,6 +244,20 @@ const canclePostEdit = (id) => {
 
   }
 
+  const updateCommentEdit = (id) => {
+    document.getElementById(`comment${id}`).style.display = "block";
+    document.getElementById(`editCommentForm${id}`).style.display = "none";
+    document.getElementById(`drpDwnCom${id}`).style.display = "block";
+    document.getElementById(`editCommentBTN${id}`).style.display =
+      "inline-block";
+      getComments();
+  };
+  const updatePostEdit = (id) => {
+    document.getElementById(`post${id}`).style.display = 'block';
+    document.getElementById(`editPostForm${id}`).style.display = 'none';
+    document.getElementById(`editPostBTN${id}`).style.display = 'inline-block';
+    document.getElementById(`imgPost${id}`).style.display = 'block';
+  };
    // like
 
 
@@ -348,7 +362,7 @@ const canclePostEdit = (id) => {
                           {/* <label className="label" for="file"><CgSoftwareUpload size={20}/>Choose file</label>  */}
 
 
-                          <Button variant="success" type='submit' size="sm" style={{marginLeft:"25%"}}>Update</Button>
+                          <Button variant="success" type='submit' size="sm" style={{marginLeft:"25%"}} onClick={() => {updatePostEdit(props.post.post_id);}}>Update</Button>
                           <Button style={{ background: 'red', color: 'white',marginLeft:'1%' }} size="sm" onClick={()=>{canclePostEdit(props.post.post_id)}} type='button'>Cancle</Button>
                       </form>
                  
@@ -376,7 +390,7 @@ const canclePostEdit = (id) => {
 
                     <br />
 
-                    <button type='submit'>Update</button>
+                    <button type='submit' onClick={() => {updatePostEdit(props.post.post_id);}}>Update</button>
                     <button style={{background : 'red' , color : 'white'}} onClick={()=>{canclePostEdit(props.post.post_id)}}  type='button'>Cancle</button>
 
                 </form>
@@ -475,7 +489,7 @@ const canclePostEdit = (id) => {
                               <textarea style={{ width: '90%' }} className="form-control" type="text" defaultValue={comment.comment_content} id={`editCommentInput${comment.comment_id}`} onChange={() => handleEditComment(comment.comment_id)} />
                               <div style={{ marginLeft: "2%", marginTop: "2%", display: "flex" }}>
                                 <div>
-                                  <Button variant="success" type='submit'>Confirm</Button>
+                                  <Button variant="success" type='submit'onClick={() => {updateCommentEdit(comment.comment_id);}}>Confirm</Button>
                                 </div>
                                 <div style={{ marginLeft: "1%" }}>
                                   <Button variant="danger" style={{ color: 'white' }} onClick={() => { cancleCommentEdit(comment.comment_id) }} type='button'>Cancle</Button>

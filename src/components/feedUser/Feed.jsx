@@ -16,6 +16,7 @@ export default function Feed(props) {
   useEffect(() => {
     getPosts();
   }, [check])
+  
   const handleSubmit = (check) => {
     console.log(check,"dddd");
     getPosts();
@@ -45,7 +46,6 @@ export default function Feed(props) {
                   posts.map((p) =>(
                     <Post  user_id={props.user_id} key = {p.id} post ={p} handleSubmit={handleSubmit}/>
                     ))}
-        {/* <Post user_id={props.user_id}/> */}
         
       </div>
     </div>

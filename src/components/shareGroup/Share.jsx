@@ -54,7 +54,6 @@ const handleImagePost = async (e) => {
     console.log(response.data);
     props.handleSubmit(Math.random());
 
-    // window.location.assign(`/groups/${group_id}/show`);
   } catch (error) {
     console.error(error);
   }
@@ -85,7 +84,7 @@ const handlePost = (e) => {
             type="file"
             className="shareInput" id="file"
             onChange={(e) => setFile(e.target.files[0])} hidden/> 
-           <label className="label" for="file"><IoMdPhotos size={20}/></label>
+           <label className="label" htmlFor="file"><IoMdPhotos size={20}/></label>
 
                            
             </div>

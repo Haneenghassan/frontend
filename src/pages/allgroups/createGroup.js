@@ -51,7 +51,7 @@ export default function CreateGroup(props) {
          <input  name="title" placeholder="Group Title" type="text" id="text" value={props.text} onChange={(e) => props.setText(e.target.value)} />
          <input name="description" required placeholder="Group Description"  type="text" id="text" value={props.group_description} onChange={(e) => props.setGroupDescription(e.target.value)} />
         <input type="file"  name="img" id="file" accept="image/*"  onChange={(e) => props.setFile(e.target.files[0])} hidden/>
-        <label className="label" for="file"><IoMdPhotos size={20}/>Choose Photo</label>
+        <label className="label" htmlFor="file"><IoMdPhotos size={20}/>Choose Photo</label>
 
 
         <br/>

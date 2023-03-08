@@ -114,7 +114,7 @@ function getUsers(){
     return (
       <>
       {/* <button class="button" style="vertical-align:middle"><span>Hover </span></button> */}
-         <h4 className='rightbarTitle'>User information <a href={`/profile/${profile_id}/edit`}><button class="button" style={{verticalAlign:"middle"}}><span>Edit </span></button></a>
+         <h4 className='rightbarTitle'>User information <a href={`/profile/${profile_id}/edit`}><button className="button" style={{verticalAlign:"middle"}}><span>Edit </span></button></a>
          
          </h4>
                 <div className="rightbarInfo">

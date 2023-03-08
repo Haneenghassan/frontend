@@ -50,7 +50,6 @@ function getPosts(){
                   posts.map((p) =>(
                     <Post group_id={props.group_id} admin_group={props.admin_group} key = {p.id} post ={p} handleSubmit={handleSubmit}/>
                     ))}
-        {/* <Post group_id={props.group_id} admin_group={props.admin_group}/> */}
         
       </div>
     </div>

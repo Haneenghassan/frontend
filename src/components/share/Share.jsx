@@ -12,17 +12,17 @@ export default function Share(props) {
 
   const [users,setUsers] = useState([]);
   const [inputs , setInputs] = useState("")
-  const [posts , setPosts] = useState([]);
-  const [comments , setComments] = useState([]);
 
 
   const [file, setFile] = useState(null);
 
   useEffect(()=>{
+    
     getUsers();
   
 
 },[]);
+
   const getUsers = async () => {
 
     await axios.get(`http://localhost:80/react_project/back_end/user.php/read/${current_ID}`)
@@ -49,7 +49,6 @@ const handleImagePost = async (e) => {
     console.log(response.data);
     props.handleSubmit(Math.random());
 
-    // window.location.assign('/home');
   } catch (error) {
     console.error(error);
   }
@@ -78,7 +77,7 @@ const handlePost = (e) => {
                     {/* <MdPermMedia htmlColor="tomato" className="shareIcon"/> */}
                     <input type="file" className="shareInput" id="file"
                      onChange={(e) => setFile(e.target.files[0])} hidden/>
-            <label className="label" for="file"><IoMdPhotos size={20}/></label>
+            <label className="label" htmlFor="file"><IoMdPhotos size={20}/></label>
                     {/* <input
             type="file" 
             className="shareInput" id="file"
